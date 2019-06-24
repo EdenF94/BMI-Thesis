@@ -1,0 +1,429 @@
+---
+title: "EDA_Facial_Features"
+author: "Eden Feldman"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(circlize)
+library(dplyr)
+library(tibble)
+library(tidyverse)
+library(grid)
+library(devtools)
+library(ggfortify)
+```
+
+```{r}
+au_data = read.csv('AU_df.csv', header=TRUE)
+full_data = read.csv('Bellevue_final_data.csv', header=TRUE)
+comb_data = read.csv('merged_df.csv', header=TRUE)
+
+testing_variables = full_data %>%
+  select('ID', 'pcl_1m_cutoff', 'Sex', 'SelfReport_Age', 'Race')
+
+au_data = as.tibble(au_data)
+print(au_data)
+testing_variables = as.tibble(testing_variables)
+print(testing_variables)
+
+colnames(testing_variables)[colnames(testing_variables)=="study_id"] <- "ID"
+colnames(testing_variables)[colnames(testing_variables)=="pcl_1m_cutoff"] <- "ptsd"
+colnames(testing_variables)[colnames(testing_variables)=="SelfReport_Age"] <- "Age"
+print(testing_variables)
+
+au_ptsd_df = merge(testing_variables, au_data, by='ID')
+au_ptsd_df$ptsd <- factor(au_ptsd_df$ptsd, labels=c("0","1"))
+au_ptsd_df$Sex <- factor(au_ptsd_df$Sex, labels=c("F","M"))
+au_ptsd_df = au_ptsd_df %>%
+  filter(!is.na(ptsd))
+print(au_ptsd_df)
+
+```
+
+
+```{r plot AU01   }
+library(gridExtra)
+au1_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU01_c, col=ptsd)) +
+  ggtitle('Count of AU1  ')
+
+au1_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU01_r, col=ptsd)) +
+  ggtitle('Intensity of AU1  ')
+
+grid.arrange(au1_c, au1_r, ncol=2)
+wilcox.test(AU01_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU01_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+
+```{r plot AU14   }
+
+au14_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU14_c, col=ptsd)) +
+  ggtitle('Count of AU14  ')
+
+au14_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU14_r, col=ptsd)) +
+  ggtitle('Intensity of AU14  ')
+
+grid.arrange(au14_c, au14_r, ncol=2)
+wilcox.test(AU14_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU14_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU12   }
+
+au12_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU12_c, col=ptsd)) +
+  ggtitle('Count of AU12  ')
+
+au12_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU12_r, col=ptsd)) +
+  ggtitle('Intensity of AU12  ')
+
+grid.arrange(au12_c, au12_r, ncol=2)
+wilcox.test(AU12_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU12_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU9   }
+
+au9_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU09_c, col=ptsd)) +
+  ggtitle('Count of AU9  ')
+
+au9_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU09_r, col=ptsd)) +
+  ggtitle('Intensity of AU9  ')
+
+grid.arrange(au9_c, au9_r, ncol=2)
+wilcox.test(AU09_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU09_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU02   }
+
+au2_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU02_c, col=ptsd)) +
+  ggtitle('Count of AU2  ')
+
+au2_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU02_r, col=ptsd)) +
+  ggtitle('Intensity of AU2  ')
+
+grid.arrange(au2_c, au2_r, ncol=2)
+wilcox.test(AU02_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU02_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU04   }
+
+au4_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU04_c, col=ptsd)) +
+  ggtitle('Count of AU4  ')
+
+au4_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU04_r, col=ptsd)) +
+  ggtitle('Intensity of AU4  ')
+
+grid.arrange(au4_c, au4_r, ncol=2)
+wilcox.test(AU04_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU04_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU06   }
+
+au6_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU06_c, col=ptsd)) +
+  ggtitle('Count of AU6  ')
+
+au6_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU06_r, col=ptsd)) +
+  ggtitle('Intensity of AU6  ')
+
+grid.arrange(au6_c, au6_r, ncol=2)
+wilcox.test(AU06_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU06_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU07   }
+
+au7_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU07_c, col=ptsd)) +
+  ggtitle('Count of AU7  ')
+
+au7_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU07_r, col=ptsd)) +
+  ggtitle('Intensity of AU7  ')
+
+grid.arrange(au7_c, au7_r, ncol=2)
+wilcox.test(AU07_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU07_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+
+```{r plot AU05   }
+
+au5_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU05_c, col=ptsd)) +
+  ggtitle('Count of AU5  ')
+
+au5_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU05_r, col=ptsd)) +
+  ggtitle('Intensity of AU5  ')
+
+grid.arrange(au5_c, au5_r, ncol=2)
+wilcox.test(AU05_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU05_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU10   }
+
+au10_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU10_c, col=ptsd)) +
+  ggtitle('Count of AU10  ')
+
+au10_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU10_r, col=ptsd)) +
+  ggtitle('Intensity of AU10  ')
+
+grid.arrange(au10_c, au10_r, ncol=2)
+wilcox.test(AU10_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU10_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU15   }
+
+au15_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU15_c, col=ptsd)) +
+  ggtitle('Count of AU15  ')
+
+au15_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU15_r, col=ptsd)) +
+  ggtitle('Intensity of AU15  ')
+
+grid.arrange(au15_c, au15_r, ncol=2)
+wilcox.test(AU15_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU15_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU17   }
+
+au17_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU17_c, col=ptsd)) +
+  ggtitle('Count of AU17  ')
+
+au17_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU15_r, col=ptsd)) +
+  ggtitle('Intensity of AU17  ')
+
+grid.arrange(au17_c, au17_r, ncol=2)
+wilcox.test(AU17_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU17_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU20   }
+
+au20_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU20_c, col=ptsd)) +
+  ggtitle('Count of AU20  ')
+
+au20_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU20_r, col=ptsd)) +
+  ggtitle('Intensity of AU20  ')
+
+grid.arrange(au20_c, au20_r, ncol=2)
+wilcox.test(AU20_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU20_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU23   }
+
+au23_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU23_c, col=ptsd)) +
+  ggtitle('Count of AU23')
+
+au23_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU23_r, col=ptsd)) +
+  ggtitle('Intensity of AU23')
+
+grid.arrange(au23_c, au23_r, ncol=2)
+wilcox.test(AU23_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU23_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU25   }
+
+au25_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU25_c, col=ptsd)) +
+  ggtitle('Count of AU25')
+
+au25_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU25_r, col=ptsd)) +
+  ggtitle('Intensity of AU25')
+
+grid.arrange(au25_c, au25_r, ncol=2)
+wilcox.test(AU25_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU25_r ~ ptsd, data = au_ptsd_df)
+
+```
+```{r plot AU26   }
+
+au26_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU26_c, col=ptsd)) +
+  ggtitle('Count of AU26  ')
+
+au26_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU26_r, col=ptsd)) +
+  ggtitle('Intensity of AU26  ')
+
+grid.arrange(au26_c, au26_r, ncol=2)
+wilcox.test(AU26_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU26_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r plot AU45   }
+
+au45_c = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU45_c, col=ptsd)) +
+  ggtitle('Count of AU25  ')
+
+au45_r = ggplot(data=au_ptsd_df) +
+  geom_boxplot(aes(ptsd, AU45_r, col=ptsd)) +
+  ggtitle('Intensity of AU45  ')
+
+grid.arrange(au45_c, au45_r, ncol=2)
+wilcox.test(AU45_c ~ ptsd, data = au_ptsd_df)
+wilcox.test(AU45_r ~ ptsd, data = au_ptsd_df)
+
+```
+
+```{r }
+lay <- rbind(c(1,2,3,4),
+             c(5,6,7,8))
+#png(filename = 'AU_boxplots2.png')
+grid.arrange(au1_r, au1_c, au14_r, au14_c, au15_r, au15_c, au25_r, au25_c, layout_matrix=lay)
+
+
+```
+
+```{r }
+
+```
+
+
+```{r PCA plot}
+
+au_only <- au_ptsd_df[, 6:40]
+ptsd_col <- au_ptsd_df[,2]
+
+pca <- prcomp(au_only, scale. = T)
+
+autoplot(pca, data = au_ptsd_df, colour = 'ptsd')
+plot(pca,type="lines")
+
+pca_varsum <- cumsum(pca$sdev^2 / sum(pca$sdev^2))
+plot(pca_varsum, type='p', ylab='Proportion of Variance', xlab='Principle Component')
+
+```
+
+```{r 3D PCA}
+#library(rgl)
+#library(pca3d)
+#pca3d(pca, group=ptsd_col, fancy= TRUE, bg= "black",
+#    axes.color= "white", new= TRUE )
+
+```
+
+
+```{r Testing Pairs Panels Function}
+library(psych)
+data <- au_ptsd_df[ -1]
+
+graphics.off()
+par(mar=c(1,1,1,1))
+pairs.panels(data[5:10], bg=c("plum","aquamarine2")[data$ptsd], pch=23+as.numeric(data$ptsd), main="Fisher AU Data by PTSD Cohort", hist.col="slateblue1",stars=TRUE, lm=TRUE)
+```
+
+
+
+```{r Cor Plot Testing}
+sub_data <- data[ c(1:3, 5:39)]
+sub_data$ptsd <- as.numeric(sub_data$ptsd)
+colnames(sub_data)[colnames(sub_data)=="ptsd"] <- "PTSD"
+sub_data$Sex <- as.numeric(sub_data$Sex)
+
+corPlot(sub_data,numbers=TRUE,stars=TRUE)
+#from a correlation matrix with pvals
+cp <- corr.test(sub_data)  #find the correlations and pvals
+r<- cp$r
+p <- cp$p
+gr <- colorRampPalette(c("royalblue3", "white", "orangered3"))
+jpeg('corplot.jpg')
+
+corPlot(r,numbers=F,diag=TRUE,stars=TRUE, pval = p,main="Correlation plot
+ with Holm corrected 'significance'", gr=gr)
+
+dev.off()
+```
+
+```{r }
+library(corrplot)
+
+col2 <- colorRampPalette(c("#053061","#2166AC", "#4393C3", "#92C5DE",
+                           "#D1E5F0", "#FFFFFF",  "#FDDBC7", "#F4A582",
+                           "#D6604D", "#B2182B", "#67001F" ))
+
+pdf('corplot2.pdf')
+corrplot(r,order = 'AOE', col=col2(100), tl.col = "black",tl.pos='lb',  tl.cex = 0.7, title = 'Correlation Plot of PTSD & AU Variables')
+dev.off()
+```
+
+```{r }
+sub_data <- comb_data[-1]
+
+sub_data$PTSD <- as.numeric(sub_data$PTSD)
+sub_data$Sex <- as.numeric(sub_data$Sex)
+
+corPlot(sub_data,numbers=TRUE,stars=TRUE)
+#from a correlation matrix with pvals
+cp <- corr.test(sub_data)  #find the correlations and pvals
+r<- cp$r
+
+
+pdf('corplot_combined.pdf')
+corrplot(r,order = 'AOE', col=col2(100), tl.col = "black",tl.pos='lb',  tl.cex = 0.7, title = 'Correlation Plot of PTSD & AU Variables')
+dev.off()
+
+
+
+```
+
+
+
